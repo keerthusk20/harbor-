@@ -64,12 +64,12 @@ spec:
         image: {{ .Values.portal.image.repository }}:{{ .Values.portal.image.tag }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         resources:
-        requests:
-          cpu: "100m"
-          memory: "256Mi"
-        limits:
-          cpu: "500m"
-          memory: "512Mi"
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
 {{- with .Values.portal.extraEnvVars }}
         env:
 {{- toYaml . | nindent 10 }}
