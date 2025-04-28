@@ -63,9 +63,16 @@ spec:
             port: 6379
           initialDelaySeconds: 1
           periodSeconds: 10
-{{- if .Values.redis.internal.resources }}
         resources:
-{{ toYaml .Values.redis.internal.resources | indent 10 }}
+          {{- if .Values.redis.internal.resources }}
+          {{ toYaml .Values.redis.internal.resources | indent 10 }}
+          {{- else }}
+          requests:
+            cpu: "500m"
+            memory: "256Mi"
+          limits:
+            cpu: "1000m"
+            memory: "512Mi"
 {{- end }}
 {{- with .Values.redis.internal.extraEnvVars }}
         env:
