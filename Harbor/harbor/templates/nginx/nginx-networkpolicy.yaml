@@ -1,0 +1,20 @@
+{{- if .Values.nginx.networkPolicy.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: harbor-nginx-network-policy
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: nginx
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: nginx
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - {}   # allow all ingress (you can restrict later)
+  egress:
+    - {}   # allow all egress
+{{- end }}

@@ -1,0 +1,27 @@
+{{- if eq .Values.redis.type "internal" -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ template "harbor.redis" . }}-network-policy
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+{{ include "harbor.labels" . | indent 4 }}
+    app.kubernetes.io/component: redis
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "harbor.matchLabels" . | nindent 6 }}
+      component: redis
+      app.kubernetes.io/component: redis
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              {{- include "harbor.matchLabels" . | nindent 14 }}
+              component: core
+      ports:
+        - port: 6379
+          protocol: TCP
+{{- end }}
