@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: harbor-registry-network-policy
+  namespace: devops-tools
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: registry
+      app.kubernetes.io/instance: harbor
+      app.kubernetes.io/name: harbor
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: core
+    ports:
+    - port: 5000
+      protocol: TCP
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: core
+    ports:
+    - port: 5000
+      protocol: TCP
