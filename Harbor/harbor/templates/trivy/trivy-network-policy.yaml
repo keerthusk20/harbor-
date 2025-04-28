@@ -1,9 +1,9 @@
-{{- if eq .Values.trivy.type "internal" -}}
+{{- if .Values.trivy.networkPolicy.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: harbor-trivy-network-policy
-  namespace: {{ .Release.Namespace | default "devops-tools" }}
+  namespace: {{ .Release.Namespace | default "harbor" }}
   labels:
     app.kubernetes.io/name: {{ include "harbor.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
@@ -16,6 +16,15 @@ spec:
   policyTypes:
   - Ingress
   - Egress
+
+  # Default deny all other traffic
+  ingress:
+  - from: []
+    ports: []
+  
+  egress:
+  - to: []
+    ports: []
   
   # Ingress Rules (Who can connect to Trivy)
   ingress:
