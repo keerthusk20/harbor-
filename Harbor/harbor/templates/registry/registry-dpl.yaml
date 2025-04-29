@@ -266,7 +266,7 @@ spec:
         {{- if .Values.caBundleSecretName }}
         {{ include "harbor.caBundleVolumeMount" . | indent 8 }}
         {{- end }}
-      - name: registryctl
+      - name: registryctl-secondary
         image: {{ .Values.registry.controller.image.repository }}:{{ .Values.registry.controller.image.tag }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         livenessProbe:
