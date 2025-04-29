@@ -673,25 +673,27 @@ registry:
     image:
       repository: goharbor/registry-photon
       tag: v2.12.2
-      resources:
-        requests:
-          memory: "512Mi"
-          cpu: "500m"
-        limits:
-          memory: "2048Mi"
-          cpu: "2000m"
+      pullPolicy: "Always"  # ✅ Ensure Checkov passes CKV_K8S_15
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "500m"
+      limits:
+        memory: "2048Mi"
+        cpu: "2000m"
     extraEnvVars: []
   controller:
     image:
       repository: goharbor/harbor-registryctl
       tag: v2.12.2
-      resources:
-        requests:
-          memory: "512Mi"
-          cpu: "500m"
-        limits:
-          memory: "1024Mi"
-          cpu: "1000m"
+      pullPolicy: "Always"  # ✅ Consistent with registry image
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "500m"
+      limits:
+        memory: "1024Mi"
+        cpu: "1000m"
     extraEnvVars: []
   # set the service account to be used, default if left empty
   serviceAccountName: ""
