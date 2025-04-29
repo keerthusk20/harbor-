@@ -678,8 +678,8 @@ registry:
           memory: "512Mi"
           cpu: "200m"
         limits:
-        memory: "1024Mi"
-        cpu: "1000m"
+          memory: "1024Mi"
+          cpu: "1000m"
     extraEnvVars: []
   controller:
     image:
