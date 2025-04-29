@@ -108,48 +108,48 @@ spec:
         securityContext:
           {{- toYaml .Values.containerSecurityContext | nindent 10 }}
         {{- end }}
-        # Registry Controller Container
+        envFrom:
+        - secretRef:
+            name: "{{ template "harbor.registry" . }}"
+        {{- if .Values.persistence.imageChartStorage.s3.existingSecret }}
+        - secretRef:
+            name: {{ .Values.persistence.imageChartStorage.s3.existingSecret }}
+        {{- end }}
+        
       - name: registryctl
         image: {{ .Values.registry.controller.image.repository }}:{{ .Values.registry.controller.image.tag }}
         imagePullPolicy: {{ .Values.registry.controller.image.pullPolicy | default "IfNotPresent" }}
-    
-    # Health Checks (adjust as needed for controller)
-    livenessProbe:
-      httpGet:
-        path: /
-        port: 8080
-      initialDelaySeconds: 30
-      periodSeconds: 10
-      timeoutSeconds: 5
-      failureThreshold: 3
-    
-    readinessProbe:
-      httpGet:
-        path: /
-        port: 8080
-      initialDelaySeconds: 5
-      periodSeconds: 10
-      timeoutSeconds: 5
-      failureThreshold: 3
-    
-    # Resource Management
-    resources:
-      {{- if .Values.registry.controller.resources }}
-      {{- toYaml .Values.registry.controller.resources | nindent 10 }}
-      {{- else }}
-      requests:
-        cpu: "500m"
-        memory: "512Mi"
-      limits:
-        cpu: "1000m"
-        memory: "1024Mi"
-      {{- end }}
-    
-    # Security
-    {{- if .Values.containerSecurityContext }}
-    securityContext:
-      {{- toYaml .Values.containerSecurityContext | nindent 10 }}
-    {{- end }}
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        resources:
+          {{- if .Values.registry.controller.resources }}
+          {{- toYaml .Values.registry.controller.resources | nindent 10 }}
+          {{- else }}
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+          limits:
+            cpu: "1000m"
+            memory: "1024Mi"
+          {{- end }}
+        {{- if not (empty .Values.containerSecurityContext) }}
+        securityContext:
+          {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+        {{- end }}
         envFrom:
         - secretRef:
             name: "{{ template "harbor.registry" . }}"
