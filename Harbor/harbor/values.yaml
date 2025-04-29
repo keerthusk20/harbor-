@@ -711,6 +711,8 @@ registry:
   ## The priority class to run the pod as
   priorityClassName:
   # containers to be run before the controller's container starts.
+  networkPolicy:
+    enabled: true  # or true if you want to enable it
   initContainers: []
   # Example:
   #
