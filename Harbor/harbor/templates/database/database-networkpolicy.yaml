@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: harbor-database-policy
+  namespace: devops-tools
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: database  # Matches Harbor's database Pod
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/component: core  # Allow connections from Harbor Core
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/component: jobservice  # Allow connections from JobService
+      ports:
+        - protocol: TCP
+          port: 5432  # PostgreSQL default port
