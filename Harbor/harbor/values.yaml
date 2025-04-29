@@ -860,6 +860,8 @@ database:
   # if external database is used, set "type" to "external"
   # and fill the connection information in "external" section
   type: internal
+  networkPolicy:
+    enabled: true
   internal:
     image:
       repository: goharbor/harbor-db
@@ -890,8 +892,6 @@ database:
     ## The priority class to run the pod as
     priorityClassName:
     # containers to be run before the controller's container starts.
-    networkPolicy:
-      enabled: true
     extraInitContainers: []
     # Example:
     #
