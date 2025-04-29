@@ -690,8 +690,8 @@ registry:
           memory: "256Mi"
           cpu: "250m"
         limits:
-        memory: "512Mi"
-        cpu: "500m"
+          memory: "512Mi"
+          cpu: "500m"
     extraEnvVars: []
   # set the service account to be used, default if left empty
   serviceAccountName: ""
