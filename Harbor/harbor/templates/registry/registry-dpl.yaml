@@ -95,7 +95,7 @@ spec:
           successThreshold: 1
         resources:
           {{- if .Values.registry.registry.resources }}
-          {{- toYaml .Values.registry.registry.resources | nindent 10 }}
+          {{- toYaml .Values.registry.registry.resources | nindent 12 }}
           {{- else }}
           requests:
             cpu: "500m"
@@ -106,7 +106,7 @@ spec:
           {{- end }}
         {{- if not (empty .Values.containerSecurityContext) }}
         securityContext:
-          {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+          {{- toYaml .Values.containerSecurityContext | nindent 12 }}
         {{- end }}
         envFrom:
         - secretRef:
@@ -118,7 +118,7 @@ spec:
         
       - name: registryctl
         image: {{ .Values.registry.controller.image.repository }}:{{ .Values.registry.controller.image.tag }}
-        imagePullPolicy: {{ .Values.registry.controller.image.pullPolicy | default "IfNotPresent" }}
+        imagePullPolicy: {{ .Values.registry.controller.image.pullPolicy | default "Always" }}
         livenessProbe:
           httpGet:
             path: /api/health
