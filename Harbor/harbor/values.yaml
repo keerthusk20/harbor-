@@ -880,9 +880,8 @@ database:
         memory: "512Mi"
         cpu: "500m"
       limits:
-        memory: "1Gi"
+        memory: "1024Mi"
         cpu: "1000m"
-    imagePullPolicy: Always
     # The timeout used in livenessProbe; 1 to 5 seconds
     livenessProbe:
       timeoutSeconds: 5
