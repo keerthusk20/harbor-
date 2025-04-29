@@ -87,18 +87,17 @@ spec:
             port: {{ template "harbor.registry.containerPort" . }}
           initialDelaySeconds: 1
           periodSeconds: 10
-        {{- if .Values.registry.registry.resources }}
         resources:
+          {{- if .Values.registry.registry.resources }}
           {{- toYaml .Values.registry.registry.resources | nindent 10 }}
-        {{- else }}
-        resources:
+          {{- else }}
           requests:
             cpu: "500m"
             memory: "512Mi"
           limits:
             cpu: "1000m"
             memory: "1024Mi"
-        {{- end }}
+          {{- end }}
         {{- if not (empty .Values.containerSecurityContext) }}
         securityContext:
           {{- toYaml .Values.containerSecurityContext | nindent 10 }}
