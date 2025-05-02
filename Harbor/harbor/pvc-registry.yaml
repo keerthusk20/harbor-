@@ -34,7 +34,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 5Gi
   storageClassName: ebs-gp3-csi
   volumeMode: Filesystem
   volumeName: pvc-1ba59e28-9a86-4560-8934-c38bb30ae1fc
@@ -42,5 +42,5 @@ status:
   accessModes:
   - ReadWriteOnce
   capacity:
-    storage: 10Gi
+    storage: 5Gi
   phase: Bound
