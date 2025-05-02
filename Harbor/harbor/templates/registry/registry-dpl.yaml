@@ -98,11 +98,11 @@ spec:
           {{- toYaml .Values.registry.registry.resources | nindent 12 }}
           {{- else }}
           requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
             cpu: "500m"
             memory: "512Mi"
-          limits:
-            cpu: "2000m"
-            memory: "2048Mi"
           {{- end }}
         {{- if not (empty .Values.containerSecurityContext) }}
         securityContext:
