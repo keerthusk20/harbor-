@@ -266,55 +266,6 @@ spec:
         {{- if .Values.caBundleSecretName }}
         {{ include "harbor.caBundleVolumeMount" . | indent 8 }}
         {{- end }}
-      - name: registryctl-secondary
-        image: {{ .Values.registry.controller.image.repository }}:{{ .Values.registry.controller.image.tag }}
-        imagePullPolicy: {{ .Values.imagePullPolicy }}
-        livenessProbe:
-          httpGet:
-            path: /api/health
-            scheme: {{ include "harbor.component.scheme" . | upper }}
-            port: {{ template "harbor.registryctl.containerPort" . }}
-          initialDelaySeconds: 300
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /api/health
-            scheme: {{ include "harbor.component.scheme" . | upper }}
-            port: {{ template "harbor.registryctl.containerPort" . }}
-          initialDelaySeconds: 1
-          periodSeconds: 10
-        {{- if .Values.registry.controller.resources }}
-        resources:
-          {{- toYaml .Values.registry.controller.resources | nindent 10 }}
-        {{- end }}
-        {{- if not (empty .Values.containerSecurityContext) }}
-        securityContext:
-          {{- toYaml .Values.containerSecurityContext | nindent 10 }}
-        {{- end }}
-        envFrom:
-        - configMapRef:
-            name: "{{ template "harbor.registryCtl" . }}"
-        - secretRef:
-            name: "{{ template "harbor.registry" . }}"
-        - secretRef:
-            name: "{{ template "harbor.registryCtl" . }}"
-        {{- if .Values.persistence.imageChartStorage.s3.existingSecret }}
-        - secretRef:
-            name: {{ .Values.persistence.imageChartStorage.s3.existingSecret }}
-        {{- end }}
-        env:
-        {{- if .Values.registry.existingSecret }}
-        - name: REGISTRY_HTTP_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.registry.existingSecret }}
-              key: {{ .Values.registry.existingSecretKey }}
-        {{- end }}
-        - name: CORE_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: {{ default (include "harbor.core" .) .Values.core.existingSecret }}
-              key: secret
         - name: JOBSERVICE_SECRET
           valueFrom:
             secretKeyRef:
