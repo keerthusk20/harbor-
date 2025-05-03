@@ -689,11 +689,11 @@ registry:
       pullPolicy: "Always"  # ✅ Consistent with registry image
     resources:
       requests:
+        memory: "256Mi"
+        cpu: "300m"
+      limits:
         memory: "512Mi"
         cpu: "500m"
-      limits:
-        memory: "1024Mi"
-        cpu: "1000m"
     extraEnvVars: []
   # set the service account to be used, default if left empty
   serviceAccountName: ""
