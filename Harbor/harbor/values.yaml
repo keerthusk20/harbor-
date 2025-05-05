@@ -51,9 +51,9 @@ expose:
     labels: {}  # Any specific labels for the LoadBalancer
     sourceRanges: []  # Optionally restrict access based on IP ranges
 
-# External URL and Hostname for Harbor
-externalURL: http://127.0.0.1:8081 # Replace with actual LoadBalancer DNS or IP
-hostname: 127.0.0.1  # Replace with the external IP or DNS of the LoadBalancer
+# Critical URL configuration
+externalURL: http://ae8d1442e5c9d4109a82590de57b6f2d-ecba94534dd8d4d3.elb.us-east-1.amazonaws.com
+hostname: ae8d1442e5c9d4109a82590de57b6f2d-ecba94534dd8d4d3.elb.us-east-1.amazonaws.com
 
 persistence:
   enabled: true
@@ -671,6 +671,9 @@ jobservice:
   existingSecretKey: JOBSERVICE_SECRET
 
 registry:
+  # Registry endpoint configuration - ADDED THIS BLOCK
+  endpoint: http://registry:5000
+  relativeurls: false
   registry:
     image:
       repository: goharbor/registry-photon
