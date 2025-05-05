@@ -53,8 +53,8 @@ expose:
     sourceRanges: []  # Optionally restrict access based on IP ranges
 
 # Critical URL configuration
-externalURL: http://ae8d1442e5c9d4109a82590de57b6f2d-ecba94534dd8d4d3.elb.us-east-1.amazonaws.com
-hostname: ae8d1442e5c9d4109a82590de57b6f2d-ecba94534dd8d4d3.elb.us-east-1.amazonaws.com
+externalURL: http://cloudmasa-nlb-52acac2868578c0c.elb.us-east-1.amazonaws.com
+hostname: cloudmasa-nlb-52acac2868578c0c.elb.us-east-1.amazonaws.com
 
 persistence:
   enabled: true
