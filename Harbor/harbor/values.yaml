@@ -39,13 +39,15 @@ expose:
 
   # LoadBalancer configuration
   loadBalancer:
-    enabled: true  # Enable LoadBalancer
+    enabled: true  # Enable LoadBalancer  
     name: harbor
     IP: ""  # Optionally specify a static IP
     ports:
       httpPort: 80  # HTTP port exposed to external access
       httpsPort: 443  # HTTPS port exposed to external access
-    annotations: {}  # Any specific annotations can be added here
+    annotations:  # Any specific annotations can be added here
+      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+      service.beta.kubernetes.io/aws-load-balancer-internal: "true"
     labels: {}  # Any specific labels for the LoadBalancer
     sourceRanges: []  # Optionally restrict access based on IP ranges
 
