@@ -730,7 +730,7 @@ registry:
     # Optional: define ingress/egress rules or specific configurations here if needed
       ingress:
         - from:
-            - podSelector: {}
+          - podSelector: {}
         ports:
           - protocol: TCP
             port: 5000
