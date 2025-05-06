@@ -695,16 +695,16 @@ registry:
     existingSecret: ""
     htpasswdString: ""
 
-    # The corrected NetworkPolicy block
-    networkPolicy:
-      enabled: true  # Enable the network policy
-      # Optional: define ingress/egress rules or specific configurations here if needed
-      ingress:
-        - from:
-          - podSelector: {}
-        - ports:
-          - protocol: TCP
-          - port: 5000
+  networkPolicy:
+    enabled: true   # Add this line to enable the network policy
+    # Optionally, specify other values for the network policy as needed
+    # allowExternal: false
+    # ingress:
+    #   - from: []
+    #     ports:
+    #       - port: 80
+    #         protocol: TCP
+
   
     controller:
       image:
