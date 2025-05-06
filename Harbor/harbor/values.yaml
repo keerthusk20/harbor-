@@ -672,15 +672,18 @@ jobservice:
   # Key within the existing secret for the job service secret
   existingSecretKey: JOBSERVICE_SECRET
 registry:
-  # Registry endpoint configuration - ADDED THIS BLOCK
+  # Registry endpoint configuration
   endpoint: http://registry:5000
   relativeurls: false
+
+  # Image configuration for the registry
   image:
     repository: goharbor/registry-photon
     tag: v2.12.2
     pullPolicy: "Always"
     arch: arm64
 
+  # Resource limits and requests for the registry
   resources:
     requests:
       memory: "128Mi"
@@ -693,7 +696,7 @@ registry:
   credentials:
     username: "harbor_registry_user"
     password: "harbor_registry_password"
-    existingSecret: ""  # Correctly defined existingSecret
+    existingSecret: ""
     htpasswdString: ""
 
   controller:
@@ -720,27 +723,33 @@ registry:
     podAnnotations: {}
     podLabels: {}
     priorityClassName:
+
+    # The corrected NetworkPolicy block
     networkPolicy:
-      enabled: true  # Ensure that this is set properly
+      enabled: true  # This must be explicitly set here for the template to use it.
+
     initContainers: []
     secret: ""
     existingSecret: ""
     existingSecretKey: REGISTRY_HTTP_SECRET
     relativeurls: false
-    middleware:
-      enabled: false
-      type: cloudFront
-      cloudFront:
-        baseurl: example.cloudfront.net
-        keypairid: KEYPAIRID
-        duration: 3000s
-        ipfilteredby: none
-        privateKeySecret: "my-secret"
-    upload_purging:
-      enabled: true
-      age: 168h
-      interval: 24h
-      dryrun: false
+
+  middleware:
+    enabled: false
+    type: cloudFront
+    cloudFront:
+      baseurl: example.cloudfront.net
+      keypairid: KEYPAIRID
+      duration: 3000s
+      ipfilteredby: none
+      privateKeySecret: "my-secret"
+
+  # Upload purging configuration
+  upload_purging:
+    enabled: true
+    age: 168h
+    interval: 24h
+    dryrun: false
 
 trivy:
   # enabled the flag to enable Trivy scanner
