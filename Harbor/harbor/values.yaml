@@ -671,38 +671,36 @@ jobservice:
   existingSecret: ""
   # Key within the existing secret for the job service secret
   existingSecretKey: JOBSERVICE_SECRET
-
 registry:
-  registry:
     # Registry endpoint configuration - ADDED THIS BLOCK
-    endpoint: http://registry:5000
-    relativeurls: false
+  endpoint: http://registry:5000
+  relativeurls: false
+  image:
+    repository: goharbor/registry-photon
+    tag: v2.12.2
+    pullPolicy: "Always"  # ✅ Ensures Checkov CKV_K8S_15 passes
+    arch: arm64           # Optional: specify architecture
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+  extraEnvVars: []
+  controller:
     image:
-      repository: goharbor/registry-photon
+      repository: goharbor/harbor-registryctl
       tag: v2.12.2
-      pullPolicy: "Always"  # ✅ Ensures Checkov CKV_K8S_15 passes
-      arch: arm64           # Optional: specify architecture
+      pullPolicy: "Always"  # ✅ Consistent with registry image
     resources:
       requests:
-        memory: "128Mi"
-        cpu: "100m"
+        memory: "256Mi"
+        cpu: "300m"
       limits:
         memory: "512Mi"
         cpu: "500m"
     extraEnvVars: []
-    controller:
-      image:
-        repository: goharbor/harbor-registryctl
-        tag: v2.12.2
-        pullPolicy: "Always"  # ✅ Consistent with registry image
-      resources:
-        requests:
-          memory: "256Mi"
-          cpu: "300m"
-        limits:
-          memory: "512Mi"
-          cpu: "500m"
-      extraEnvVars: []
     # set the service account to be used, default if left empty
     serviceAccountName: ""
     # mount the service account token
