@@ -419,7 +419,6 @@ containerSecurityContext:
       - ALL
 
 # If service exposed via "ingress", the Nginx will not be used
-imagePullPolicy: "Always"
 nginx:
   image:
     repository: goharbor/nginx-photon
