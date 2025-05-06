@@ -673,93 +673,82 @@ jobservice:
   existingSecretKey: JOBSERVICE_SECRET
 
 registry:
-  # Registry endpoint configuration
-  endpoint: http://registry:5000
-  relativeurls: false
+  registry:
+    endpoint: http://registry:5000
+    relativeurls: false
 
-  image:
-    repository: goharbor/registry-photon
-    tag: v2.12.2
-    pullPolicy: "Always"
-    arch: arm64  # Optional: explicitly set architecture
-
-  resources:
-    requests:
-      memory: "128Mi"
-      cpu: "100m"
-    limits:
-      memory: "512Mi"
-      cpu: "500m"
-
-  extraEnvVars: []
-
-  controller:
     image:
-      repository: goharbor/harbor-registryctl
+      repository: goharbor/registry-photon
       tag: v2.12.2
       pullPolicy: "Always"
+      arch: arm64
+
     resources:
       requests:
-        memory: "256Mi"
-        cpu: "300m"
+        memory: "128Mi"
+        cpu: "100m"
       limits:
         memory: "512Mi"
         cpu: "500m"
+
     extraEnvVars: []
 
-  serviceAccountName: ""
-  automountServiceAccountToken: false
-  replicas: 1
-  revisionHistoryLimit: 10
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
+    controller:
+      image:
+        repository: goharbor/harbor-registryctl
+        tag: v2.12.2
+        pullPolicy: "Always"
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "300m"
+        limits:
+          memory: "512Mi"
+          cpu: "500m"
+      extraEnvVars: []
 
-  topologySpreadConstraints: []
-  # Example:
-  # - maxSkew: 1
-  #   topologyKey: topology.kubernetes.io/zone
-  #   nodeTaintsPolicy: Honor
-  #   whenUnsatisfiable: DoNotSchedule
+    serviceAccountName: ""
+    automountServiceAccountToken: false
+    replicas: 1
+    revisionHistoryLimit: 10
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
 
-  podAnnotations: {}
-  podLabels: {}
-  priorityClassName: ""
+    topologySpreadConstraints: []
+    podAnnotations: {}
+    podLabels: {}
+    priorityClassName: ""
 
-  networkPolicy:
-    enabled: true
+    networkPolicy:
+      enabled: true
 
-  initContainers: []
-  # Example:
-  # - name: wait
-  #   image: busybox
-  #   command: ['sh', '-c', "sleep 20"]
-
-  secret: ""  # Must be a string of 16 characters (optional if not using existingSecret)
-  existingSecret: ""
-  existingSecretKey: REGISTRY_HTTP_SECRET
-
-  credentials:
-    username: "harbor_registry_user"
-    password: "harbor_registry_password"
+    initContainers: []
+    secret: ""
     existingSecret: ""
-    htpasswdString: ""
+    existingSecretKey: REGISTRY_HTTP_SECRET
 
-  middleware:
-    enabled: false
-    type: cloudFront
-    cloudFront:
-      baseurl: example.cloudfront.net
-      keypairid: KEYPAIRID
-      duration: 3000s
-      ipfilteredby: none
-      privateKeySecret: "my-secret"
+    credentials:
+      username: "harbor_registry_user"
+      password: "harbor_registry_password"
+      existingSecret: ""
+      htpasswdString: ""
 
-  upload_purging:
-    enabled: true
-    age: 168h
-    interval: 24h
-    dryrun: false
+    middleware:
+      enabled: false
+      type: cloudFront
+      cloudFront:
+        baseurl: example.cloudfront.net
+        keypairid: KEYPAIRID
+        duration: 3000s
+        ipfilteredby: none
+        privateKeySecret: "my-secret"
+
+    upload_purging:
+      enabled: true
+      age: 168h
+      interval: 24h
+      dryrun: false
 
 trivy:
   # enabled the flag to enable Trivy scanner
