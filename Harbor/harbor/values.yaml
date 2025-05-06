@@ -670,15 +670,18 @@ jobservice:
   # Key within the existing secret for the job service secret
   existingSecretKey: JOBSERVICE_SECRET
 registry:
+  # Registry endpoint configuration
   endpoint: http://registry:5000
   relativeurls: false
-
+  
+  # Image configuration for the registry
   image:
     repository: goharbor/registry-photon
     tag: v2.12.2
     pullPolicy: "Always"
     arch: arm64
-
+  
+  # Resource limits and requests for the registry
   resources:
     requests:
       memory: "128Mi"
@@ -686,72 +689,71 @@ registry:
     limits:
       memory: "512Mi"
       cpu: "500m"
-
   extraEnvVars: []
-
+  
   credentials:
     username: "harbor_registry_user"
     password: "harbor_registry_password"
-    existingSecret: ""
+    existingSecret: ""  # Either remove this line or provide a secret name
     htpasswdString: ""
-
+  
+  # NetworkPolicy configuration
   networkPolicy:
-    enabled: true   # Add this line to enable the network policy
-    # Optionally, specify other values for the network policy as needed
-    # allowExternal: false
-    # ingress:
-    #   - from: []
-    #     ports:
-    #       - port: 80
-    #         protocol: TCP
-
+    enabled: true
+    # Optional: define ingress/egress rules
+    ingress:
+      - from:
+        - podSelector: {}
+      - ports:
+        - protocol: TCP
+          port: 5000
   
-    controller:
-      image:
-        repository: goharbor/harbor-registryctl
-        tag: v2.12.2
-        pullPolicy: "Always"
-      resources:
-        requests:
-          memory: "256Mi"
-          cpu: "300m"
-        limits:
-          memory: "512Mi"
-          cpu: "500m"
-      extraEnvVars: []
-      serviceAccountName: ""
-      automountServiceAccountToken: false
-      replicas: 1
-      revisionHistoryLimit: 10
-      nodeSelector: {}
-      tolerations: []
-      affinity: {}
-      topologySpreadConstraints: []
-      podAnnotations: {}
-      podLabels: {}
-      priorityClassName:
-      initContainers: []
-      secret: ""
-      existingSecret: ""
-      existingSecretKey: REGISTRY_HTTP_SECRET
-      relativeurls: false
+  controller:
+    image:
+      repository: goharbor/harbor-registryctl
+      tag: v2.12.2
+      pullPolicy: "Always"
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "300m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+    extraEnvVars: []
+    serviceAccountName: ""
+    automountServiceAccountToken: false
+    replicas: 1
+    revisionHistoryLimit: 10
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    topologySpreadConstraints: []
+    podAnnotations: {}
+    podLabels: {}
+    priorityClassName: ""
+    initContainers: []
+    secret: ""
+    existingSecret: ""
+    existingSecretKey: REGISTRY_HTTP_SECRET
+    relativeurls: false
   
-    middleware:
-      enabled: false
-      type: cloudFront
-      cloudFront:
-        baseurl: example.cloudfront.net
-        keypairid: KEYPAIRID
-        duration: 3000s
-        ipfilteredby: none
-        privateKeySecret: "my-secret"
+  middleware:
+    enabled: false
+    type: cloudFront
+    cloudFront:
+      baseurl: example.cloudfront.net
+      keypairid: KEYPAIRID
+      duration: 3000s
+      ipfilteredby: none
+      privateKeySecret: "my-secret"
   
-    # Upload purging configuration
-    upload_purging:
-      enabled: true
-      age: 168h
-      interval: 24h
-      dryrun: false
+  # Fixed upload_purging configuration (must be under registry.registry)
+  upload_purging:
+    enabled: true
+    age: 168h
+    interval: 24h
+    dryrun: false
 
 trivy:
   # enabled the flag to enable Trivy scanner
