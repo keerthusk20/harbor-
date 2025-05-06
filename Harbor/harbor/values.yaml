@@ -52,8 +52,8 @@ expose:
     sourceRanges: []  # Optionally restrict access based on IP ranges
 
 # External URL and Hostname for Harbor
-externalURL: http://127.0.0.1:8081 # Replace with actual LoadBalancer DNS or IP
-hostname: 127.0.0.1  # Replace with the external IP or DNS of the LoadBalancer
+externalURL: http://a6eec33bc73b94bfb9c10f68695aaf95-8c33208788e6e3f6.elb.us-east-1.amazonaws.com# Replace with actual LoadBalancer DNS or IP
+hostname: a6eec33bc73b94bfb9c10f68695aaf95-8c33208788e6e3f6.elb.us-east-1.amazonaws.com  # Replace with the external IP or DNS of the LoadBalancer
 
 persistence:
   enabled: true
