@@ -672,6 +672,7 @@ jobservice:
   # Key within the existing secret for the job service secret
   existingSecretKey: JOBSERVICE_SECRET
 registry:
+  # Registry endpoint configuration - ADDED THIS BLOCK
   endpoint: http://registry:5000
   relativeurls: false
   image:
@@ -692,7 +693,7 @@ registry:
   credentials:
     username: "harbor_registry_user"
     password: "harbor_registry_password"
-    existingSecret: ""  # Correct indentation
+    existingSecret: ""  # Correctly defined existingSecret
     htpasswdString: ""
 
   controller:
@@ -720,7 +721,7 @@ registry:
     podLabels: {}
     priorityClassName:
     networkPolicy:
-      enabled: true
+      enabled: true  # Ensure that this is set properly
     initContainers: []
     secret: ""
     existingSecret: ""
