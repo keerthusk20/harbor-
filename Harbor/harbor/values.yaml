@@ -698,6 +698,17 @@ registry:
     existingSecret: ""
     htpasswdString: ""
 
+  # The corrected NetworkPolicy block
+    networkPolicy:
+      enabled: true  # Enable the network policy
+    # Optional: define ingress/egress rules or specific configurations here if needed
+      ingress:
+        - from:
+          - podSelector: {}
+        - ports:
+          - protocol: TCP
+          - port: 5000
+
   controller:
     image:
       repository: goharbor/harbor-registryctl
@@ -722,19 +733,6 @@ registry:
     podAnnotations: {}
     podLabels: {}
     priorityClassName:
-
-    # The corrected NetworkPolicy block
-    networkPolicy:
-      enabled: true  # Enable the network policy
-    # Optional: define ingress/egress rules or specific configurations here if needed
-      ingress:
-        - from:
-          - podSelector: {}
-        - ports:
-          - protocol: TCP
-          - port: 5000
-
-
     initContainers: []
     secret: ""
     existingSecret: ""
