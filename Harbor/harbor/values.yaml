@@ -730,9 +730,9 @@ registry:
       ingress:
         - from:
           - podSelector: {}
-        ports:
+        - ports:
           - protocol: TCP
-            port: 5000
+          - port: 5000
 
 
     initContainers: []
