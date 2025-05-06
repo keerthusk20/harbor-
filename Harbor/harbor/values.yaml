@@ -670,34 +670,31 @@ jobservice:
   # Key within the existing secret for the job service secret
   existingSecretKey: JOBSERVICE_SECRET
 registry:
-  registry:
-    # Registry endpoint configuration
-    endpoint: http://registry:5000
-    relativeurls: false
-  
-    # Image configuration for the registry
-    image:
-      repository: goharbor/registry-photon
-      tag: v2.12.2
-      pullPolicy: "Always"
-      arch: arm64
-  
-    # Resource limits and requests for the registry
-    resources:
-      requests:
-        memory: "128Mi"
-        cpu: "100m"
-      limits:
-        memory: "512Mi"
-        cpu: "500m"
-    extraEnvVars: []
-  
-    credentials:
-      username: "harbor_registry_user"
-      password: "harbor_registry_password"
-      existingSecret: ""
-      htpasswdString: ""
-  
+  endpoint: http://registry:5000
+  relativeurls: false
+
+  image:
+    repository: goharbor/registry-photon
+    tag: v2.12.2
+    pullPolicy: "Always"
+    arch: arm64
+
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+  extraEnvVars: []
+
+  credentials:
+    username: "harbor_registry_user"
+    password: "harbor_registry_password"
+    existingSecret: ""
+    htpasswdString: ""
+
     # The corrected NetworkPolicy block
     networkPolicy:
       enabled: true  # Enable the network policy
