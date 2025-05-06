@@ -738,17 +738,6 @@ registry:
     existingSecretKey: REGISTRY_HTTP_SECRET
     relativeurls: false
   
-  middleware:
-    enabled: false
-    type: cloudFront
-    cloudFront:
-      baseurl: example.cloudfront.net
-      keypairid: KEYPAIRID
-      duration: 3000s
-      ipfilteredby: none
-      privateKeySecret: "my-secret"
-  
-  # Fixed upload_purging configuration (must be under registry.registry)
   upload_purging:
     enabled: true
     age: 168h
